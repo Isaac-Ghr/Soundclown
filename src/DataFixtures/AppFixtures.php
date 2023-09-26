@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         $lesArtistes = fload("artiste.csv");
         $genre = ["man", "woman"];
         foreach ($lesArtistes as $var) {
-            static $cpt = 0;
+            static $cpt = 1;
             $artiste = new Artiste();
             $artiste    -> setNom($var[1])
             -> setDescription("<p>partez du principe que c'est un long paragraphe</p><p>cette ligne de caractères est aussi un paragraphe</p>")
@@ -38,23 +38,10 @@ class AppFixtures extends Fixture
             -> setImage("https://randomuser.me/api/portraits/".$genre[mt_rand(0,1)]."/".mt_rand(1,99).".jpg")
             -> setType($var[2]);
             $manager->persist($artiste);
+            $this->addReference("artiste".$var[0], $artiste);
             $cpt++;
-            $this->addReference("artiste".$cpt, $artiste);
         }
 
-        
-        // Albums
-        $lesAlbums = fload("album.csv");
-        foreach ($lesAlbums as $val) {
-            static $cpt = 1;
-            $album = new Album();
-            $album      -> setNom($val[1])
-                        -> setDate(intval($val[2]))
-                        -> setArtiste($this->getReference("artiste".$val[4]));
-            $manager->persist($album);
-            $this->addReference("album".$cpt, $album);
-            $cpt++;
-        }
         
         // Styles
         $lesStyles = fload("style.csv");
@@ -62,10 +49,25 @@ class AppFixtures extends Fixture
             static $cpt = 1;
             $style = new Style();
             $style      ->setLibelle($vst[1])
-                        ->setCouleur($faker->safeHexColor())
-                        ->setAlbum($this.getReference("album".$val[3]));
+                        ->setCouleur($faker->safeHexColor());
             $manager->persist($style);
-            $this->addReference("style".$cpt, $style);
+            $this->addReference("style".$vst[0], $style);
+            $cpt++;
+        }
+        
+        // Albums
+        $lesAlbums = fload("album.csv");
+        foreach ($lesAlbums as $val) {
+            static $cpt = 1;
+            $random = rand(0,300);
+            $album = new Album();
+            $album      -> setNom($val[1])
+                        -> setDate(intval($val[2]))
+                        -> setImage("https://picsum.photos/id/{$random}/200")
+                        -> setArtiste($this->getReference("artiste".$val[4]))
+                        -> addStyle($this->getReference("style".$val[3]));
+            $manager->persist($album);
+            $this->addReference("album".$val[0], $album);
             $cpt++;
         }
 
@@ -76,9 +78,9 @@ class AppFixtures extends Fixture
             $morceau = new Morceau();
             $morceau    -> setTitre($vmo[2])
                         -> setDuree(date("i:s",$vmo[3]))
-                        -> setArtiste($this->getReference("artiste".$vmo[4]));
+                        -> setAlbum($this->getReference("album".$vmo[1]));
             $manager->persist($morceau);
-            $this->addReference("morceau".$cpt, $morceau);
+            $this->addReference("morceau".$vmo[0], $morceau);
             $cpt++;
         }
         

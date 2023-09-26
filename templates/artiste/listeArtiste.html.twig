@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArtisteController!{% endblock %}
+
+{% block body %}
+<div class="row">
+{% for artiste in lesArtistes %}
+<div class="card mx-3" style="width: 18rem;">
+  <img src=" {{ artiste.image }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ artiste.nom }}</h5>
+    <div class="card-text">{{ artiste.description }}</div>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
