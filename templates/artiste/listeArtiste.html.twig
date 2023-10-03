@@ -1,16 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArtisteController!{% endblock %}
-
+{% block title %}{{parent()}} - Artistes{% endblock %}
 {% block body %}
-<div class="row">
+<div class="row justify-content-around">
 {% for artiste in lesArtistes %}
-<div class="card mx-3" style="width: 18rem;">
+{% set nbAlbum = artiste.albums|length %}
+<div class="card mx-3 my-2" style="width: 18rem;">
   <img src=" {{ artiste.image }}" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{ artiste.nom }}</h5>
-    <div class="card-text">{{ artiste.description }}</div>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title text-center">{{ artiste.nom }}</h5>
+    <hr>
+    <div class="card-text text-justify">{{artiste.description|split('|')}}</div>
+    <hr>
+    <div class="card-text text-secondary">Nombre d'albums : {{ nbAlbum }}</div>
+    <a href="{{ path('app_artiste', {'id': artiste.id}) }}" class="btn btn-primary mt-4 w-100">Consulter</a>
+    <a href="{{ artiste.site }}" class="btn btn-primary mt-4 w-100">Site web</a>
   </div>
 </div>
 {% endfor %}

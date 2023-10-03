@@ -28,14 +28,14 @@ class AppFixtures extends Fixture
         
         // Artistes
         $lesArtistes = fload("artiste.csv");
-        $genre = ["man", "woman"];
+        $genre = ["men", "women"];
         foreach ($lesArtistes as $var) {
             static $cpt = 1;
             $artiste = new Artiste();
             $artiste    -> setNom($var[1])
-            -> setDescription("<p>partez du principe que c'est un long paragraphe</p><p>cette ligne de caractères est aussi un paragraphe</p>")
+            -> setDescription($faker->text()."|".$faker->text())
             -> setSite("cestuneurl.com")
-            -> setImage("https://randomuser.me/api/portraits/".$genre[mt_rand(0,1)]."/".mt_rand(1,99).".jpg")
+            -> setImage("https://randomuser.me/api/portraits/".$genre[$var[2]]."/".mt_rand(1,99).".jpg")
             -> setType($var[2]);
             $manager->persist($artiste);
             $this->addReference("artiste".$var[0], $artiste);

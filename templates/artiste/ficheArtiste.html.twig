@@ -1,20 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArtisteController!{% endblock %}
+{% block title %}{{parent()}} - {{ unArtiste.nom }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Isaac/Documents/monprojet--version=5.4/src/Controller/ArtisteController.php'|file_link(0) }}">src/Controller/ArtisteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Isaac/Documents/monprojet--version=5.4/templates/artiste/index.html.twig'|file_link(0) }}">templates/artiste/index.html.twig</a></code></li>
-    </ul>
+<h1 class="text-center pt-2">Fiche de l'artiste</h1>
+<div class="row">
+        <div class="card px-0 mb-3 container">
+        <div class="card-header">
+            <h5 class="card-title text-center">{{ unArtiste.nom }}</h5>
+        </div>
+        <div class="row py-3 px-1">
+            <div class="col col-5 d-flex allign-items-center">
+                <img style="aspect-ratio: 1/1; width: 192px; margin: auto"
+                class="rounded-circle"
+                src="{{ unArtiste.image }}"
+                draggable="false"/>
+            </div>
+            <div class="px-3 col">
+                <h5 class="card-title">Coordonnées</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{unArtiste.site}}</li>
+                    <li class="list-group-item">{{unArtiste.description}}</li>
+                    <li class="list-group-item">
+                        <span class="badge rounded-pill badge-info bg-primary">
+                            {% if unArtiste.type == 0 %}
+                            homme
+                            {% else %}
+                            femme
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body">
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <a onclick="javascript:history.back()" class="btn btn-primary text-center w-25">Retour</a>
 </div>
 {% endblock %}

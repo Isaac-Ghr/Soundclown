@@ -20,11 +20,12 @@ class ArtisteController extends AbstractController
         ]);
     }
 
-    #[Route('/artiste', name: 'app_artiste')]
-    public function ficheArtiste(): Response
+    #[Route('/artiste/{id}', name: 'app_artiste')]
+    public function ficheArtiste(Artiste $artiste): Response
     {
         return $this->render('artiste/ficheArtiste.html.twig', [
             'controller_name' => 'ArtisteController',
+            'unArtiste' => $artiste
         ]);
     }
 }
