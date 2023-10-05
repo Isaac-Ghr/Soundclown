@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
             static $cpt = 1;
             $artiste = new Artiste();
             $artiste    -> setNom($var[1])
-            -> setDescription($faker->text()."|".$faker->text())
+            -> setDescription($faker->paragraph()."|".$faker->paragraph())
             -> setSite("cestuneurl.com")
             -> setImage("https://randomuser.me/api/portraits/".$genre[$var[2]]."/".mt_rand(1,99).".jpg")
             -> setType($var[2]);

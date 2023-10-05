@@ -10,7 +10,7 @@
   <div class="card-body">
     <h5 class="card-title text-center">{{ artiste.nom }}</h5>
     <hr>
-    <div class="card-text text-justify">{{artiste.description|split('|')}}</div>
+    <div class="card-text text-justify">{%for str in artiste.description|split('|')%} {{str}} {% endfor %}</div>
     <hr>
     <div class="card-text text-secondary">Nombre d'albums : {{ nbAlbum }}</div>
     <a href="{{ path('app_artiste', {'id': artiste.id}) }}" class="btn btn-primary mt-4 w-100">Consulter</a>
