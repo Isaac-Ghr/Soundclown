@@ -2,6 +2,7 @@
 
 {% block title %}{{parent()}} - Artistes{% endblock %}
 {% block body %}
+<h1 class="text-center">Liste des Artistes</h1>
 <div class="row justify-content-around">
 {% for artiste in lesArtistes %}
 {% set nbAlbum = artiste.albums|length %}

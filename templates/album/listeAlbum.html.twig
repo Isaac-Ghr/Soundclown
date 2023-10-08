@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Albums{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Liste des Albums</h1>
+<div class="row justify-content-around">
+    {% for album in lesAlbums %}
+    {% set artiste = album.artiste %}
+    <div class="card mx-3 my-2" style="width: 18rem;">
+    <a href="{{ path('app_album', {'id': album.id}) }}">
+    <img src=" {{ album.image }}" class="card-img-top" alt="...">
+    </a>
+    <div class="card-body">
+        <h5 class="card-title text-center"><a href="{{ path('app_album', {'id': album.id}) }}">{{ album.nom }}</a></h5>
+        <h6 class="card-title text-center text-secondary">Paru en {{ album.date }}</h5>
+        <hr>
+        <div class="card-text text-secondary">
+        <img src="{{ artiste.image }}" width="32px" height="32px" class="rounded mr-1" />
+        <a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{ artiste.nom }}</a>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row justify-content-center">
+    <div class="navigation px-auto">
+    {{ knp_pagination_render(lesAlbums) }}
+    </div>
+</div>
+{% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}{{parent()}} - {{ unArtiste.nom }}{% endblock %}
 
 {% block body %}
+{% set nbAlbum = unArtiste.albums|length %}
 <h1 class="text-center pt-2">Fiche de l'artiste</h1>
 <div class="row">
         <div class="card px-0 mb-3 container">
@@ -16,11 +17,16 @@
                 src="{{ unArtiste.image }}"
                 draggable="false"/>
             </div>
-            <div class="px-3 col">
-                <h5 class="card-title">Coordonnées</h5>
+            <div class="px-3 col mr-5">
+                <h5 class="card-title">Informations</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{unArtiste.site}}</li>
-                    <li class="list-group-item">{{unArtiste.description}}</li>
+                    <li class="list-group-item">Nombre d'albums : {{nbAlbum}}</li>
+                    <li class="list-group-item"><a target="_blank" href="https://media.tenor.com/7C0djPN9J-QAAAAi/troll-troll-face.gif">{{unArtiste.site}}</a></li>
+                    <li class="list-group-item">
+                    {% for partie in unArtiste.description|split('|') %}
+                    <p>{{partie}}</p>
+                    {% endfor %}
+                    </li>
                     <li class="list-group-item">
                         <span class="badge rounded-pill badge-info bg-primary">
                             {% if unArtiste.type == 0 %}
@@ -37,7 +43,7 @@
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mb-5">
     <a onclick="javascript:history.back()" class="btn btn-primary text-center w-25">Retour</a>
 </div>
 {% endblock %}
