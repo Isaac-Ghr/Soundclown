@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Artiste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,6 +21,33 @@ class ArtisteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Artiste::class);
     }
+
+    /**
+    * @return Artiste[] Returns an array of Artiste objects
+    */
+   public function listeArtistesComplete()
+   {
+       return $this->createQueryBuilder('a')
+           ->select('art', 'a')
+           ->innerJoin('art.albums', 'a')
+           ->orderBy('art.nom', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+    /**
+    * @return Query Returns an array of Artiste objects
+    */
+   public function listeArtistesCompleteP(): Query
+   {
+       return $this->createQueryBuilder('art')
+           ->select('art', 'a')
+           ->innerJoin('art.albums', 'a')
+           ->orderBy('art.nom', 'ASC')
+           ->getQuery()
+       ;
+   }
 
 //    /**
 //     * @return Artiste[] Returns an array of Artiste objects

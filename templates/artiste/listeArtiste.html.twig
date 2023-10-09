@@ -9,16 +9,19 @@
 <div class="card mx-3 my-2" style="width: 18rem;">
   <img src=" {{ artiste.image }}" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title text-center">{{ artiste.nom }}</h5>
+    <h5 class="card-title text-center"><a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{artiste.nom}}</a></h5>
     <hr>
-    <div class="card-text text-justify">{%for str in artiste.description|split('|')%} {{str}} {% endfor %}</div>
+    <div class="card-text text-justify">{% for str in artiste.description|split('|')%} {{str}} {% endfor %}</div>
     <hr>
     <div class="card-text text-secondary">Nombre d'albums : {{ nbAlbum }}</div>
-    <a href="{{ path('app_artiste', {'id': artiste.id}) }}" class="btn btn-primary mt-4 w-100">Consulter</a>
     <a href="{{ artiste.site }}" class="btn btn-primary mt-4 w-100">Site web</a>
   </div>
 </div>
 {% endfor %}
 </div>
-
+<div class="row justify-content-center">
+    <div class="navigation px-auto">
+    {{ knp_pagination_render(lesArtistes) }}
+    </div>
+</div>
 {% endblock %}

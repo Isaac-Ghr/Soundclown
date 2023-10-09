@@ -30,11 +30,22 @@
                     <li class="list-group-item">
                         <span class="badge rounded-pill badge-info bg-primary">
                             {% if unArtiste.type == 0 %}
-                            homme
+                            solo
                             {% else %}
-                            femme
+                            groupe
                             {% endif %}
                         </span>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Liste des albums</h2>
+                        <table class="table table-sm table-striped">
+                        {% for album in unArtiste.albums %}
+                            <tr>
+                            <td class="col-1"><img class="rounded" src="{{album.image}}" style="width: 48px; height: 48px;"/><td>
+                            <td class="col-5">{{album.nom}} - {{album.date}}<td>
+                            <tr>
+                        {% endfor %}
+                        </table>
                     </li>
                 </ul>
             </div>
@@ -43,6 +54,7 @@
         </div>
     </div>
 </div>
+
 <div class="d-flex justify-content-center mb-5">
     <a onclick="javascript:history.back()" class="btn btn-primary text-center w-25">Retour</a>
 </div>

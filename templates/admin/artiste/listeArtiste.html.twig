@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Gestion Artistes{% endblock %}
+{% block body %}
+<h1 class="text-center">Gestion des Artistes</h1>
+<table class="table table-sm table-hover table-striped">
+  <thead>
+      <tr>
+      <th scope="col" class="col-1">Numéro</th>
+      <th scope="col" class="col-1">Image</th>
+      <th scope="col" class="col-3">Nom</th>
+      <th scope="col" class="col-3">Description</th>
+      <th scope="col" class="col-3">Site</th>
+      <th scope="col" class="col-3">Type</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for artiste in lesArtistes %}
+          <tr>
+          <td class='col-1'>{{artiste.id}}</th>
+          <td class='col-1'><img src="{{artiste.image}}" class="rounded-circle" style="width: 64px; height: 64px;"/></th>
+          <td class='col-3'>{{artiste.nom}}</th>
+          <td class='col-3'>{{artiste.description|u.truncate(30, '...', false)}}</th>
+          <td class='col-3'>{{artiste.site}}</th>
+          <td class='col-3'>{% if artiste.type == 0 %} Solo {% else %} Groupe {% endif %}</th>
+          <td class='col-3 text-right'>
+          <a href='#' class='btn btn-primary' role='button'>✏️</a>
+          <a href='#' data-toggle='modal' data-suppr='' class='btn btn-danger' role='button'>🗑️</a>            
+          </td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<div class="row justify-content-center">
+    <div class="navigation px-auto">
+    {{ knp_pagination_render(lesArtistes) }}
+    </div>
+</div>
+{% endblock %}
