@@ -6,6 +6,7 @@ use App\Repository\ArtisteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
@@ -17,6 +18,7 @@ class Artiste
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "Le nom est nécessaire")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -26,9 +28,11 @@ class Artiste
     private ?string $site = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'image de profil est nécessaire")]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "On doit connaître le type de l'artiste")]
     private ?string $type = null;
 
     #[ORM\OneToMany(mappedBy: 'artiste', targetEntity: Album::class)]
