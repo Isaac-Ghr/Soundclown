@@ -25,7 +25,15 @@
           <td class='col-3'>{% if artiste.type == 0 %} Solo {% else %} Groupe {% endif %}</th>
           <td class='col-3 text-right'>
           <a href='#' class='btn btn-primary' role='button'>✏️</a>
-          <a href='#' data-toggle='modal' data-suppr='' class='btn btn-danger' role='button'>🗑️</a>            
+          <a href='#' 
+          data-toggle='modal' 
+          data-target='#confirmSuppr'
+          data-titre="Suppression d'un artiste"
+          data-message="Êtes-vous sûr de vouloir supprimer l'artiste : {{ artiste.nom }}"
+          data-libelleConf="Supprimer"
+          data-lien="{{ path('app_admin_artiste_suppr', {'id': artiste.id}) }}"
+          class='btn btn-danger' 
+          role='button'>🗑️</a>            
           </td>
           </tr>
       {% endfor %}
@@ -36,4 +44,7 @@
     {{ knp_pagination_render(lesArtistes) }}
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {% include "include/_modalSuppr.html.twig" %}
 {% endblock %}
