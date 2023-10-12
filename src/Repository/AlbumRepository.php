@@ -28,9 +28,10 @@ class AlbumRepository extends ServiceEntityRepository
    public function listeAlbumsComplete(): Query
    {
        return $this->createQueryBuilder('a')
-           ->select('a', 's', 'art')
+           ->select('a', 's', 'art', 'l')
            ->innerJoin('a.styles', 's')
            ->innerJoin('a.artiste', 'art')
+           ->innerJoin('a.label', 'l')
            ->orderBy('a.nom', 'ASC')
            ->getQuery()
        ;

@@ -7,6 +7,7 @@
 <div class="row justify-content-around">
     {% for album in lesAlbums %}
     {% set artiste = album.artiste %}
+    {% set label = album.label %}
     <div class="card mx-3 my-2" style="width: 18rem;">
     <a href="{{ path('app_album', {'id': album.id}) }}">
     <img src=" {{ album.image }}" class="card-img-top" alt="...">
@@ -18,6 +19,11 @@
         <div class="card-text text-secondary">
         <img src="{{ artiste.image }}" width="32px" height="32px" class="rounded mr-1" />
         <a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{ artiste.nom }}</a>
+        </div>
+        <hr>
+        <div class="card-text text-secondary">
+        <img src="{{ label.logo }}" width="32px" height="32px" class="rounded mr-1" />
+        <a href="{{ path('app_label', {'id': label.id}) }}">{{ label.nom }}</a>
         </div>
     </div>
     </div>

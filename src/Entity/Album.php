@@ -34,6 +34,10 @@ class Album
     #[ORM\ManyToMany(targetEntity: Style::class, mappedBy: 'albums')]
     private Collection $styles;
 
+    #[ORM\ManyToOne(inversedBy: 'Albums')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Label $label = null;
+
     public function __construct()
     {
         $this->morceaus = new ArrayCollection();
@@ -146,6 +150,18 @@ class Album
         if ($this->styles->removeElement($style)) {
             $style->removeAlbum($this);
         }
+
+        return $this;
+    }
+
+    public function getLabel(): ?Label
+    {
+        return $this->label;
+    }
+
+    public function setLabel(?Label $label): static
+    {
+        $this->label = $label;
 
         return $this;
     }
