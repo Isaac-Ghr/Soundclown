@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LabelController!{% endblock %}
+{% block title %}{{parent()}} - {{ unLabel.nom }}{% endblock %}
 
 {% block body %}
 {% set nbAlbum = unLabel.albums|length %}

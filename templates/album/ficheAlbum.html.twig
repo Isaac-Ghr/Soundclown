@@ -5,47 +5,49 @@
 {% block body %}
 {% set label = unAlbum.label %}
 {% set artiste = unAlbum.artiste %}
+{% set morceaux = unAlbum.morceaus|length %}
 <h1 class="text-center pt-2">Fiche de l'Album</h1>
 <div class="d-flex mb-5">
     <a onclick="javascript:history.back()" class="btn btn-primary text-center w-25">Retour</a>
 </div>
-<div class="row">
+<div class="row" style="padding: 0 10rem;">
         <div class="card px-0 mb-3 container">
         <div class="card-header">
             <h5 class="card-title text-center">{{ unAlbum.nom }} - {{ unAlbum.date }}</h5>
         </div>
-        <div class="row py-3 px-1">
-            <div class="col d-flex allign-items-center">
+        <div style="display: flex; width: 100%; padding: 2rem 1.5rem; gap: 1rem;">
+            <div style="justify-self: center;">
                 <img style="aspect-ratio: 1/1; width: 192px; margin: auto; object-fit: center;"
                 class="rounded"
                 src="{{ unAlbum.image }}"
                 draggable="false"/>
             </div>
-            <div class="px-2 col">
-                <h5 class="card-title">Styles</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                    {% for style in unAlbum.styles %}
-                        <span class="badge rounded-pill badge-info bg-primary">
-                            {{ style.libelle }}
-                        </span>
-                    {% endfor %}
-                    <a href="{{path('app_artiste', {'id': artiste.id}) }}">
-                        <span class="badge rounded-pill badge-info bg-dark">
-                            {{ artiste.nom }}
-                        </span>
-                    </a>
-                    <a href="{{path('app_label', {'id': label.id}) }}">
-                        {% if label.type == "Majeur" %}
-                        <span class="badge rounded-pill badge-info bg-warning">
-                        {% else %}
-                        <span class="badge rounded-pill badge-info bg-primary">
-                        {% endif %}
-                            {{ label.nom }}
-                        </span>
-                    </a>
-                    </li>
-                </ul>
+                <div style="display: flex; width: 100%;">
+                    <div style="flex-grow: 1;">
+                        {% for style in unAlbum.styles %}
+                            <span class="badge rounded-pill badge-info bg-primary">
+                                {{ style.libelle }}
+                            </span>
+                        {% endfor %}
+                        <a href="{{path('app_artiste', {'id': artiste.id}) }}">
+                            <span class="badge rounded-pill badge-info bg-dark">
+                                {{ artiste.nom }}
+                            </span>
+                        </a> <br>
+                        <h5>{{morceaux}} morceaux</h5>
+                    </div>
+                    <div style="justify-self: end;">
+                        <a href="{{path('app_label', {'id': label.id}) }}">
+                            {% if label.type == "Majeur" %}
+                            <span class="badge rounded-pill badge-info bg-warning">
+                            {% else %}
+                            <span class="badge rounded-pill badge-info bg-success">
+                            {% endif %}
+                                {{ label.nom }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="px-2 col">
                 <h5 class="card-title">Pistes</h5>
@@ -57,7 +59,6 @@
                 {% endfor %}
                 </ul>
             </div>
-        </div>
         <div class="card-body">
         </div>
     </div>
