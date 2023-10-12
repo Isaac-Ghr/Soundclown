@@ -6,6 +6,7 @@
 <h1 class="text-center">Liste des Labels</h1>
 <div class="row justify-content-around">
     {% for label in lesLabels %}
+    {% set nbAlbum = label.albums|length %}
     {# {% set artiste = album.artiste %} #}
     <div class="card mx-3 my-2" style="width: 18rem;">
     <a href="{{ path('app_album', {'id': label.id}) }}">
@@ -15,6 +16,8 @@
         <h5 class="card-title text-center"><a href="{{ path('app_label', {'id': label.id}) }}">{{ label.nom }}</a></h5>
         <h6 class="card-title text-center text-secondary">Depuis en {{ label.annee }}</h5>
         <hr>
+        <div class="card-text text-justify">{{ label.description|u.truncate(200, '...', false)|raw}}</div> <hr>
+        {{ nbAlbum }} albums signés
         {# <div class="card-text text-secondary">
         <img src="{{ artiste.image }}" width="32px" height="32px" class="rounded mr-1" />
         <a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{ artiste.nom }}</a>

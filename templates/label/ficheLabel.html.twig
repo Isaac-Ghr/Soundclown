@@ -3,6 +3,7 @@
 {% block title %}Hello LabelController!{% endblock %}
 
 {% block body %}
+{% set nbAlbum = unLabel.albums|length %}
 <h1 class="text-center pt-2">Fiche du Label</h1>
 <div class="d-flex mb-5">
     <a onclick="javascript:history.back()" class="btn btn-primary text-center w-25">Retour</a>
@@ -19,23 +20,65 @@
                 src="{{ unLabel.logo }}"
                 draggable="false"/>
             </div>
-            <div class="px-2 col">
-                <h5 class="card-title">Albums signés</h5>
-                <ul class="list-group list-group-flush">
+            <div class="pr-3 col">
+                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Nombre d'albums : {{ nbAlbum }}</li>
                     <li class="list-group-item">
-                    {% for album in unLabel.albums %}
-                    <a href="{{path('app_album', {'id': album.id})}}">
-                        <span class="badge rounded-pill badge-info bg-dark">
-                            {{ album.nom }}
+                    {{ unLabel.description|u.truncate(200, '...', false)|raw }}
+                    </li>
+                    <li class="list-group-item">
+                        {% if unLabel.type == "Majeur" %}
+                        <span class="badge rounded-pill badge-info bg-warning">
+                        {% else %}
+                        <span class="badge rounded-pill badge-info bg-success">
+                        {% endif %}
+                        {{unLabel.type}}
                         </span>
-                    </a>
-                    {% endfor %}
                     </li>
                 </ul>
             </div>
         </div>
+
+            <div>
+                <h5 class="card-title ml-3">Albums signés</h5>
+                <table class="table table-sm table-hover table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col" class="col-1">Nom</th>
+                    <th scope="col" class="col-3">Artiste</th>
+                    <th scope="col" class="col-3">Année</th>
+                    <th scope="col" class="col-3">Style</th>
+                    </tr>
+                </thead>
+                    {% for album in unLabel.albums %}
+                    {% set artiste = album.artiste %}
+                    <tr>
+                    <td class="col-6">
+                    <a href="{{path('app_album', {'id': album.id})}}">
+                        <img src="{{album.image}}" class="rounded mr-2" style="width: 32px; height: 32px;" />{{ album.nom }}
+                    </a>
+                    </td>
+                    <td class="col-4">
+                    <a href="{{path('app_artiste', {'id': artiste.id})}}">
+                        <img src="{{artiste.image}}" class="rounded mr-2" style="width: 32px; height: 32px;" /> {{ artiste.nom }}
+                    </a>
+                    </td>
+                    <td class="col-1">
+                        {{ album.date }}
+                    </td>
+                    <td class="col-2">
+                        <span class="badge rounded-pill badge-info bg-dark">
+                            {% for style in album.styles %}
+                            {{ style.libelle }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
         <div class="card-body">
         </div>
-    </div>
 </div>
 {% endblock %}

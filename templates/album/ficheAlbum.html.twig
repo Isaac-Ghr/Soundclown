@@ -36,7 +36,11 @@
                         </span>
                     </a>
                     <a href="{{path('app_label', {'id': label.id}) }}">
+                        {% if label.type == "Majeur" %}
                         <span class="badge rounded-pill badge-info bg-warning">
+                        {% else %}
+                        <span class="badge rounded-pill badge-info bg-primary">
+                        {% endif %}
                             {{ label.nom }}
                         </span>
                     </a>
