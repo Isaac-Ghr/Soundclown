@@ -9,6 +9,7 @@ use App\Entity\Morceau;
 use App\Entity\Style;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Nationalite;
 
 class AppFixtures extends Fixture
 {    
@@ -26,6 +27,11 @@ class AppFixtures extends Fixture
             return $resultat;
         }
         
+        $natio = [
+            new Nationalite("Française", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%29.svg/langfr-225px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%29.svg.png"),
+            new Nationalite("Américaine", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/langfr-225px-Flag_of_the_United_States.svg.png")
+        ];
+
         // Artistes
         $lesArtistes = fload("artiste.csv");
         $genre = ["men", "women"];
@@ -36,7 +42,8 @@ class AppFixtures extends Fixture
             -> setDescription($faker->paragraph()."|".$faker->paragraph())
             -> setSite("cestuneurl.com")
             -> setImage("https://randomuser.me/api/portraits/".$genre[$var[2]]."/".mt_rand(1,99).".jpg")
-            -> setType($var[2]);
+            -> setType($var[2])
+            -> setNationalite($natio[random_int(0, 1)]);
             $manager->persist($artiste);
             $this->addReference("artiste".$var[0], $artiste);
             $cpta++;
