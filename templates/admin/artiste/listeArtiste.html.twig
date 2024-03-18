@@ -9,7 +9,8 @@
       <tr>
       <th scope="col" class="col-1">Numéro</th>
       <th scope="col" class="col-1">Image</th>
-      <th scope="col" class="col-3">Nom</th>
+      <th scope="col" class="col-1">Nom</th>
+      <th scope="col" class="col-1">Nationalité</th>
       <th scope="col" class="col-3">Description</th>
       <th scope="col" class="col-3">Site</th>
       <th scope="col" class="col-3" colspan="2">Type</th>
@@ -20,7 +21,8 @@
           <tr>
           <td class='col-1'>{{artiste.id}}</th>
           <td class='col-1'><img src="{{artiste.image}}" class="rounded-circle" style="width: 64px; height: 64px;"/></th>
-          <td class='col-3'>{{artiste.nom}}</th>
+          <td class='col-1'>{{artiste.nom}}</th>
+          <td class='col-1'>{{artiste.nationalite.libelle}}</th>
           <td class='col-3'>{{artiste.description|u.truncate(30, '...', false)}}</th>
           <td class='col-3'>{{artiste.site}}</th>
           <td class='col-3'>{% if artiste.type == 0 %} Solo {% else %} Groupe {% endif %}</th>

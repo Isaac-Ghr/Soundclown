@@ -32,6 +32,23 @@ class NationaliteRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    
+    public function choiceList(): array
+    {
+        $result = $this->createQueryBuilder('n')
+            ->select('n.libelle as libelle', 'n.id as id')
+            ->orderBy('n.libelle', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $output = [];
+        foreach ($result as $r) {
+            $output[$r['libelle']] = $r['id'];
+        }
+
+        return $output;
+    }
 
 //    /**
 //     * @return Nationalite[] Returns an array of Nationalite objects

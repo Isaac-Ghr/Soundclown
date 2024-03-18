@@ -52,19 +52,27 @@ class ArtisteRepository extends ServiceEntityRepository
     /**
     * @return Query Returns an array of Artiste objects
     */
-    public function listeArtistesFiltreP($nom, $natioID): Query
+    public function listeArtistesFiltreP(?string $nom, ?int $natioID): Query
     {
-        return $this->createQueryBuilder('art')
+        $query = $this->createQueryBuilder('art')
             ->select('art', 'a')
             ->join('art.nationalite', 'n')
             ->leftJoin('art.albums', 'a')
-            ->andWhere('n.nom = :nomp')
-            ->setParameter('nomp', $nom)
-            ->andWhere('n.id = :nid')
-            ->setParameter('nid', $natioID)
-            ->orderBy('art.nom', 'ASC')
-            ->getQuery()
         ;
+
+        if ($nom) {
+            $query->andWhere('art.nom like :nomp')
+                ->setParameter('nomp', "%{$nom}%");
+        }
+
+        if ($natioID) {
+            $query->andWhere('n.id = :nid')
+                ->setParameter('nid', $natioID);
+        }
+
+        $query->orderBy('art.nom', 'ASC');
+
+        return $query->getQuery();
     }
 
 //    /**
