@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231012122730 extends AbstractMigration
+final class Version20240318084900 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,18 +20,22 @@ final class Version20231012122730 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE label (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, annee INT NOT NULL, type VARCHAR(255) NOT NULL, logo VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE album ADD label_id INT NOT NULL');
+        $this->addSql('CREATE TABLE nationalite (id INT AUTO_INCREMENT NOT NULL, libelle VARCHAR(255) NOT NULL, drapeau VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE album ADD CONSTRAINT FK_39986E4333B92F39 FOREIGN KEY (label_id) REFERENCES label (id)');
         $this->addSql('CREATE INDEX IDX_39986E4333B92F39 ON album (label_id)');
+        $this->addSql('ALTER TABLE artiste ADD nationalite_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE artiste ADD CONSTRAINT FK_9C07354F1B063272 FOREIGN KEY (nationalite_id) REFERENCES nationalite (id)');
+        $this->addSql('CREATE INDEX IDX_9C07354F1B063272 ON artiste (nationalite_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE artiste DROP FOREIGN KEY FK_9C07354F1B063272');
+        $this->addSql('DROP TABLE nationalite');
         $this->addSql('ALTER TABLE album DROP FOREIGN KEY FK_39986E4333B92F39');
-        $this->addSql('DROP TABLE label');
         $this->addSql('DROP INDEX IDX_39986E4333B92F39 ON album');
-        $this->addSql('ALTER TABLE album DROP label_id');
+        $this->addSql('DROP INDEX IDX_9C07354F1B063272 ON artiste');
+        $this->addSql('ALTER TABLE artiste DROP nationalite_id');
     }
 }

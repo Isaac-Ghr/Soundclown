@@ -25,29 +25,47 @@ class ArtisteRepository extends ServiceEntityRepository
     /**
     * @return Artiste[] Returns an array of Artiste objects
     */
-   public function listeArtistesComplete()
-   {
-       return $this->createQueryBuilder('a')
-           ->select('art', 'a')
-           ->leftJoin('art.albums', 'a')
-           ->orderBy('art.nom', 'ASC')
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    public function listeArtistesComplete()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('art', 'a')
+            ->leftJoin('art.albums', 'a')
+            ->orderBy('art.nom', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /**
     * @return Query Returns an array of Artiste objects
     */
-   public function listeArtistesCompleteP(): Query
-   {
-       return $this->createQueryBuilder('art')
-           ->select('art', 'a')
-           ->leftJoin('art.albums', 'a')
-           ->orderBy('art.nom', 'ASC')
-           ->getQuery()
-       ;
-   }
+    public function listeArtistesCompleteP(): Query
+    {
+        return $this->createQueryBuilder('art')
+            ->select('art', 'a')
+            ->leftJoin('art.albums', 'a')
+            ->orderBy('art.nom', 'ASC')
+            ->getQuery()
+        ;
+    }
+    
+    /**
+    * @return Query Returns an array of Artiste objects
+    */
+    public function listeArtistesFiltreP($nom, $natioID): Query
+    {
+        return $this->createQueryBuilder('art')
+            ->select('art', 'a')
+            ->join('art.nationalite', 'n')
+            ->leftJoin('art.albums', 'a')
+            ->andWhere('n.nom = :nomp')
+            ->setParameter('nomp', $nom)
+            ->andWhere('n.id = :nid')
+            ->setParameter('nid', $natioID)
+            ->orderBy('art.nom', 'ASC')
+            ->getQuery()
+        ;
+    }
 
 //    /**
 //     * @return Artiste[] Returns an array of Artiste objects

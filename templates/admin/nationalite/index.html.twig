@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Gestion Nationalités{% endblock %}
+{% block body %}
+<h1 class="text-center">Gestion des Nationalités</h1>
+<a href="{{ path('app_admin_nationalite_create') }}" class="btn btn-dark mb-3">Ajouter une nationalité</a>
+{% if nationalites|length > 0 %}
+    <table class="table table-sm table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col" class="col-1">Drapeau</th>
+            <th scope="col" class="col-1">ID</th>
+            <th scope="col" class="col-1">Libelle</th>
+            <th scope="col" class="col-3">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nationalite in nationalites %}
+            <tr>
+            <td class='col-1'><img src="{{nationalite.drapeau}}" class="rounded shadow" style="height: 64px; width: auto;"/></th>
+            <td class='col-1'>{{nationalite.id}}</th>
+            <td class='col-1'>{{nationalite.libelle}}</th>
+            <td class='col-3 text-right'>
+            <a href='{{ path('app_admin_nationalite_update', {'id': nationalite.id}) }}' class='btn btn-primary' role='button'>✏️</a>
+            <a  href='#' 
+                data-toggle='modal' 
+                data-target='#confirmSuppr'
+                data-titre="Suppression d'une nationalite"
+                data-message="Êtes-vous sûr de vouloir supprimer cette nationalite : {{ nationalite.libelle }}"
+                data-libelleConf="Supprimer"
+                data-lien="{{ path('app_admin_nationalite_suppr', {'id': nationalite.id}) }}"
+                class='btn btn-danger' 
+                role='button'>🗑️</a>
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {# <div class="row justify-content-center">
+        <div class="navigation px-auto">
+        {{ knp_pagination_render(lesnationalites) }}
+        </div>
+    </div> #}
+{% else %}
+    <p class="text-secondary text-center" style="position: relative; top: 5rem;">Aucune nationalité</p>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {% include "include/_modalSuppr.html.twig" %}
+{% endblock %}

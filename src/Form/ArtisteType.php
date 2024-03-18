@@ -9,9 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class ArtisteType extends AbstractType
 {
@@ -23,6 +21,7 @@ class ArtisteType extends AbstractType
                 "required"=>true
             ])
             ->add('description', TextareaType::class, [
+                "attr"=>["style"=>"height: 100%;"],
                 "required"=>false
             ])
             ->add('site', UrlType::class, [
@@ -39,6 +38,7 @@ class ArtisteType extends AbstractType
                 "multiple"=>false,
                 "required"=>true
             ])
+            ->add('nationalite')
         ;
     }
 
