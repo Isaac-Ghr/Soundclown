@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Liste Nationalités{% endblock %}
+{% block body %}
+<h1 class="text-center">Liste des Nationalités</h1>
+{% if nationalites|length > 0 %}
+    <div class="d-flex justify-content-around flex-wrap w-100">
+        {% for nationalite in nationalites %}
+            {% set n = nationalite.obj_natio %}
+            {% set nba = nationalite.nbArtistes %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{n.drapeau}}" class="card-img-top" alt="Drapeau {{n.libelle}}">
+                <div class="card-body">
+                    <h5 class="card-title">Nationalité {{n.libelle}}</h5>
+                    <span class="badge badge-secondary">Nombre d'artistes : {{nba}}</span>
+                    {# <a href="#" class="btn btn-primary">Go somewhere</a> #}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {# <div class="row justify-content-center">
+        <div class="navigation px-auto">
+        {{ knp_pagination_render(lesnationalites) }}
+        </div>
+    </div> #}
+{% else %}
+    <p class="text-secondary text-center" style="position: relative; top: 5rem;">Aucune nationalité</p>
+{% endif %}
+{% endblock %}

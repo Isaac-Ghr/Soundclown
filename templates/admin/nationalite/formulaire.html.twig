@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Edition Nationalité{% endblock %}
+{% block body %}
+<h1 class="pt-2 text-center">Edition Nationalité</h1>
+{{form_start(natioForm)}}
+<div class="row">
+    <div class="col">
+    {{form_row(natioForm.libelle, {'label' : "Libelle de la nationalité"})}}
+    {{form_row(natioForm.drapeau, {'label' : "Url du drapeau"})}}
+    </div>
+</div>
+<input type="submit" class="btn btn-success" value="valider">
+{{form_end(natioForm)}}
+{% endblock %}

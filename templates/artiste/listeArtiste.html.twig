@@ -3,6 +3,21 @@
 {% block title %}{{parent()}} - Artistes{% endblock %}
 {% block body %}
 <h1 class="text-center">Liste des Artistes</h1>
+{{ form_start(recherche) }}
+  <style>
+    .custom > .form-group {
+      flex-grow: 1;
+    }
+    .custom {
+      gap: 1rem;
+    }
+  </style>
+  <div class="d-flex w-100 gap-3 custom">
+    {{ form_row(recherche.nom) }}
+    {{ form_row(recherche.nationalite) }}
+  </div>
+  <input type="submit" class="btn btn-success" value="rechercher" />
+{{ form_end(recherche) }}
 <div class="row justify-content-around">
 {% for artiste in lesArtistes %}
 {% set nbAlbum = artiste.albums|length %}
@@ -12,6 +27,8 @@
     <h5 class="card-title text-center"><a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{artiste.nom}}</a></h5>
     <hr>
     <div class="card-text text-justify">{% for str in artiste.description|split('|')%} {{str}} {% endfor %}</div>
+    <hr>
+    <div class="card-text text-secondary">Nationalité : {{ artiste.nationalite }}</div>
     <hr>
     <div class="card-text text-secondary">Nombre d'albums : {{ nbAlbum }}</div>
     <a href="{{ artiste.site }}" class="btn btn-primary mt-4 w-100">Site web</a>

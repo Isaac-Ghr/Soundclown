@@ -3,15 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Artiste;
+use App\Entity\Nationalite;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ArtisteType extends AbstractType
 {
@@ -23,6 +23,7 @@ class ArtisteType extends AbstractType
                 "required"=>true
             ])
             ->add('description', TextareaType::class, [
+                "attr"=>["style"=>"height: 100%;"],
                 "required"=>false
             ])
             ->add('site', UrlType::class, [
@@ -37,6 +38,11 @@ class ArtisteType extends AbstractType
                 "choices"=>["solo"=>0, "groupe"=>1],
                 "expanded"=>true,
                 "multiple"=>false,
+                "required"=>true
+            ])
+            ->add('nationalite', EntityType::class, [
+                "class"=>Nationalite::class,
+                "choice_label"=>"libelle",
                 "required"=>true
             ])
         ;

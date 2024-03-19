@@ -25,29 +25,55 @@ class ArtisteRepository extends ServiceEntityRepository
     /**
     * @return Artiste[] Returns an array of Artiste objects
     */
-   public function listeArtistesComplete()
-   {
-       return $this->createQueryBuilder('a')
-           ->select('art', 'a')
-           ->leftJoin('art.albums', 'a')
-           ->orderBy('art.nom', 'ASC')
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    public function listeArtistesComplete()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('art', 'a')
+            ->leftJoin('art.albums', 'a')
+            ->orderBy('art.nom', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /**
     * @return Query Returns an array of Artiste objects
     */
-   public function listeArtistesCompleteP(): Query
-   {
-       return $this->createQueryBuilder('art')
-           ->select('art', 'a')
-           ->leftJoin('art.albums', 'a')
-           ->orderBy('art.nom', 'ASC')
-           ->getQuery()
-       ;
-   }
+    public function listeArtistesCompleteP(): Query
+    {
+        return $this->createQueryBuilder('art')
+            ->select('art', 'a')
+            ->leftJoin('art.albums', 'a')
+            ->orderBy('art.nom', 'ASC')
+            ->getQuery()
+        ;
+    }
+    
+    /**
+    * @return Query Returns an array of Artiste objects
+    */
+    public function listeArtistesFiltreP(?string $nom, ?int $natioID): Query
+    {
+        $query = $this->createQueryBuilder('art')
+            ->select('art', 'a')
+            ->join('art.nationalite', 'n')
+            ->leftJoin('art.albums', 'a')
+        ;
+
+        if ($nom) {
+            $query->andWhere('art.nom like :nomp')
+                ->setParameter('nomp', "%{$nom}%");
+        }
+
+        if ($natioID) {
+            $query->andWhere('n.id = :nid')
+                ->setParameter('nid', $natioID);
+        }
+
+        $query->orderBy('art.nom', 'ASC');
+
+        return $query->getQuery();
+    }
 
 //    /**
 //     * @return Artiste[] Returns an array of Artiste objects
