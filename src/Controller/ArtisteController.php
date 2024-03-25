@@ -31,7 +31,7 @@ class ArtisteController extends AbstractController
         $artistes = $paginator->paginate(
             $repo->listeArtistesFiltreP($nom, $natioID), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/
+            8 /*limit per page*/
         );
 
         return $this->render('artiste/listeArtiste.html.twig', [
