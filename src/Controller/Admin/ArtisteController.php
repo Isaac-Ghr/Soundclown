@@ -33,12 +33,14 @@ class ArtisteController extends AbstractController
     #[Route('/admin/artiste', name: 'app_admin_artiste_create', methods: ["GET", "POST"])]
     public function formArtiste(?Artiste $artiste, Request $request, EntityManagerInterface $manager): Response
     {
-        if ($artiste == null) { $artiste = New Artiste(); }
+        $msg = "modifié";
+        if ($artiste == null) { $artiste = New Artiste(); $msg = "créé";}
         $form = $this->createForm(ArtisteType::class, $artiste);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($artiste);
             $manager->flush();
+            $this->addFlash('success', "L'artiste a bien été {$msg}");
             return $this->redirectToRoute('app_admin_artistes');
         }
         return $this->render('admin/artiste/formulaireArtiste.html.twig', [
