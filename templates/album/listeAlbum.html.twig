@@ -3,34 +3,34 @@
 {% block title %}{{parent()}} - Albums{% endblock %}
 
 {% block body %}
-<h1 class="text-center">Liste des Albums</h1>
-<div class="row justify-content-around">
+<h1>Liste des Albums</h1>
+{% include "include/albSearchBar.html.twig" %}
+<div class="gap-3" style="display: grid; grid-template-columns: repeat(4, 1fr);">
     {% for album in lesAlbums %}
-    {% set artiste = album.artiste %}
-    {% set label = album.label %}
-    <div class="card mx-3 my-2" style="width: 18rem;">
-    <a href="{{ path('app_album', {'id': album.id}) }}">
-    <img src=" {{ album.image }}" class="card-img-top" alt="...">
-    </a>
-    <div class="card-body">
-        <h5 class="card-title text-center"><a href="{{ path('app_album', {'id': album.id}) }}">{{ album.nom }}</a></h5>
-        <h6 class="card-title text-center text-secondary">Paru en {{ album.date }}</h5>
-        <hr>
-        <div class="card-text text-secondary">
-        <img src="{{ artiste.image }}" width="32px" height="32px" class="rounded mr-1" />
-        <a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{ artiste.nom }}</a>
+        {% set artiste = album.artiste %}
+        {% set label = album.label %}
+        
+        <div class="card" style="">
+            <img src=" {{ album.image }}" class="card-img-top" alt="photo de l'album">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{{ path('app_album', {'id': album.id}) }}">{{album.nom}}</a></h5>
+                <h6 class="text-secondary">Paru en {{ album.date }}</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <img src="{{ artiste.image }}" width="32px" class="rounded-1 border" />
+                    <a href="{{ path('app_artiste', {'id': artiste.id}) }}" class="text-dark">{{ artiste.nom }}</a>
+                </li>
+                <li class="list-group-item">
+                    <img src="{{ label.logo }}" width="32px" class="rounded-1 border" />
+                    <a href="{{ path('app_label', {'id': label.id}) }}" class="text-dark">{{ label.nom }}</a>
+                </li>
+            </ul>
         </div>
-        <hr>
-        <div class="card-text text-secondary">
-        <img src="{{ label.logo }}" width="32px" height="32px" class="rounded mr-1" />
-        <a href="{{ path('app_label', {'id': label.id}) }}">{{ label.nom }}</a>
-        </div>
-    </div>
-    </div>
     {% endfor %}
 </div>
-<div class="row justify-content-center">
-    <div class="navigation px-auto">
+<div class="d-flex justify-content-center mt-3">
+    <div class="navigation">
     {{ knp_pagination_render(lesAlbums) }}
     </div>
 </div>

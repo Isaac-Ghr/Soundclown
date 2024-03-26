@@ -1,8 +1,8 @@
-<div>
+<div class="mb-3">
   {{ form_start(recherche, {'attr': {'class': "container-fluid border rounded p-2"}}) }}
     <div class="gap-2" style="display: grid; grid-template-columns: repeat(2, 1fr);">
       {{ form_row(recherche.nom) }}
-      {{ form_row(recherche.nationalite) }}
+      {{ form_row(recherche.style) }}
     </div>
     <input type="submit" class="btn btn-success btn-sm mt-2" value="rechercher" />
   {{ form_end(recherche) }}

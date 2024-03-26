@@ -22,20 +22,47 @@ class AlbumRepository extends ServiceEntityRepository
         parent::__construct($registry, Album::class);
     }
 
-   /**
+    /**
     * @return Query Returns an array of Album objects
     */
-   public function listeAlbumsComplete(): Query
-   {
-       return $this->createQueryBuilder('a')
-           ->select('a', 's', 'art', 'l')
-           ->innerJoin('a.styles', 's')
-           ->innerJoin('a.artiste', 'art')
-           ->innerJoin('a.label', 'l')
-           ->orderBy('a.nom', 'ASC')
-           ->getQuery()
-       ;
-   }
+    public function listeAlbumsComplete(): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 's', 'art', 'l')
+            ->innerJoin('a.styles', 's')
+            ->innerJoin('a.artiste', 'art')
+            ->innerJoin('a.label', 'l')
+            ->orderBy('a.nom', 'ASC')
+            ->getQuery()
+        ;
+    }
+    
+    /**
+    * @return Query Returns an array of Album objects
+    */
+    public function listeAlbumsFiltre(?string $nom, ?int $style): Query
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 's', 'art', 'l')
+            ->innerJoin('a.styles', 's')
+            ->innerJoin('a.artiste', 'art')
+            ->innerJoin('a.label', 'l')
+        ;
+
+        if ($nom) {
+            $query->andWhere("a.nom like :nom")->setParameter(":nom", "%{$nom}%");
+        }
+
+        if ($style) {
+            $condition = $query->expr()->isMemberOf(":style", "a.styles");
+            $query->setParameter(":style", "{$style}");
+            $query->andWhere($condition);
+        }
+
+        // $query->orderBy('a.nom', 'ASC');
+
+        return $query->getQuery();
+    }
 
 //    /**
 //     * @return Album[] Returns an array of Album objects

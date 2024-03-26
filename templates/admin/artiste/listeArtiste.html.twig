@@ -20,7 +20,7 @@
       {% for artiste in lesArtistes %}
           <tr>
           <td class='col-1'>{{artiste.id}}</th>
-          <td class='col-1'><img src="{{artiste.image}}" class="rounded-circle" style="width: 64px; height: 64px;"/></th>
+          <td class='col-1'><img src="{{artiste.image}}" class="rounded" style="height: 64px;"/></th>
           <td class='col-1'>{{artiste.nom}}</th>
           <td class='col-1'>{{artiste.nationalite.libelle}}</th>
           <td class='col-3'>{{artiste.description|u.truncate(30, '...', false)}}</th>

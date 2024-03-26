@@ -2,9 +2,9 @@
 
 {% block title %}{{parent()}} - Artistes{% endblock %}
 {% block body %}
-<h1 class="text-center">Liste des Artistes</h1>
+<h1>Liste des Artistes</h1>
 {% include 'include/artSearchBar.html.twig' %}
-<div class="container-fluid mt-3 gap-3" style="display: grid; grid-template-columns: repeat(4, 1fr);">
+<div class="mt-3 gap-3" style="display: grid; grid-template-columns: repeat(4, 1fr);">
 {% for artiste in lesArtistes %}
 {% set nbAlbum = artiste.albums|length %}
 <div class="card" style="">
