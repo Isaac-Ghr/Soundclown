@@ -13,7 +13,7 @@
     <h5 class="card-title"><a href="{{ path('app_artiste', {'id': artiste.id}) }}">{{artiste.nom}}</a></h5>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Nationalité : {{ artiste.nationalite }}</li>
+    <li class="list-group-item">Nationalité : {{ artiste.nationalite.libelle }}</li>
     <li class="list-group-item">Nombre d'albums : {{ nbAlbum }}</li>
   </ul>
   <div class="card-body">

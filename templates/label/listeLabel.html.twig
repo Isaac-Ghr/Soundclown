@@ -12,7 +12,7 @@
         <div class="card" style="">
             <img src=" {{ label.logo }}" class="card-img-top" alt="Logo du label">
             <div class="card-body">
-                <h5 class="card-title"><a href="{{ path('app_artiste', {'id': label.id}) }}">{{label.nom}}</a></h5>
+                <h5 class="card-title"><a href="{{ path('app_label', {'id': label.id}) }}">{{label.nom}}</a></h5>
                 <h6 class="text-secondary">Depuis {{ label.annee }}</h6>
             </div>
             <ul class="list-group list-group-flush">

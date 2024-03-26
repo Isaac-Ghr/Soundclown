@@ -8,7 +8,7 @@
 <div class="d-flex mb-5">
     <a onclick="javascript:history.back()" class="btn btn-dark text-center w-25">Retour</a>
 </div>
-<div class="row mb-3">
+<div class="row mb-3 align-items-start">
     <div class="col-md-3 col-sm-5 container d-flex flex-column gap-2">
         <img src="{{unArtiste.image}}" alt="Photo de l'artiste" class="img-thumbnail">
         <div>
@@ -29,8 +29,8 @@
         </p>
     </div>
     
-    <div class="col container border rounded p-2">
-        <h2>Albums : {{ nbAlbum }}</h2>
+    <div class="col container border rounded p-2 bg-light">
+        <h2>Albums <span class="badge text-bg-secondary">{{ nbAlbum }}</span></h2>
         <div class="gap-2" style="display: grid; grid-template-columns: repeat(4, 1fr);">
             {% for album in unArtiste.albums %}
             <div class="card">

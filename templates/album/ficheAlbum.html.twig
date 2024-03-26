@@ -11,7 +11,7 @@
 <div class="d-flex mb-5">
     <a onclick="javascript:history.back()" class="btn btn-dark text-center w-25">Retour</a>
 </div>
-<div class="row mb-3 container">    
+<div class="row mb-3 container align-items-start">    
     <div class="col card p-0">
         <div class="card-header">
             <h4 class="card-title">Morceaux : {{ morceaux }}</h4>
@@ -33,7 +33,7 @@
                 <h3>{{ unAlbum.nom }}</h3>
             </li>
             <li class="list-group-item">
-                <span class="border-bottom">Artiste</span> <br>
+                <span>Artiste</span> <br>
                 <img src="{{ artiste.image }}" width="32px" class="rounded-1 border" />
                 <a href="{{ path('app_artiste', {'id': artiste.id}) }}" class="text-dark">{{ artiste.nom }}</a>
             </li>
@@ -47,6 +47,10 @@
                 {% for style in unAlbum.styles %}
                     <span class="badge text-dark border bg-body-secondary">{{ style.libelle }}</span>
                 {% endfor %}
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Création: {{unAlbum.createdAt|date('d/m/Y')}}</span> <br>
+                <span class="text-secondary">Mise à jour: {{unAlbum.updatedAt|date('d/m/Y')}}</span>
             </li>
         </ul>
     </div>

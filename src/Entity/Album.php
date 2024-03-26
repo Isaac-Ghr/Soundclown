@@ -7,7 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ["nom"], message: "Le nom de l'album est déjà réservé")]
 class Album
 {
     #[ORM\Id]
@@ -16,6 +21,7 @@ class Album
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3, minMessage: "Le nom de l'album doit comporter au moins {{ limit }} caractères")]
     private ?string $nom = null;
 
     #[ORM\Column]
@@ -37,6 +43,12 @@ class Album
     #[ORM\ManyToOne(inversedBy: 'Albums')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Label $label = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -164,5 +176,40 @@ class Album
         $this->label = $label;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $creadedAt): static
+    {
+        $this->createdAt = $creadedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setAllDates(): void {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+    
+    #[ORM\PreUpdate]
+    public function Updated(): void {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }
