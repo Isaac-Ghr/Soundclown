@@ -21,16 +21,16 @@
             <td class='col-1'>{{nationalite.id}}</th>
             <td class='col-1'>{{nationalite.libelle}}</th>
             <td class='col-3 text-right'>
-            <a href='{{ path('app_admin_nationalite_update', {'id': nationalite.id}) }}' class='btn btn-primary' role='button'>✏️</a>
-            <a  href='#' 
-                data-toggle='modal' 
-                data-target='#confirmSuppr'
+            <a href='{{ path('app_admin_nationalite_update', {'id': nationalite.id}) }}' class='btn btn-secondary' role='button'><i class="bi bi-pen-fill"></i></a>
+            <button type='button' 
+                data-bs-toggle='modal' 
+                data-bs-target='#suppr-modal'
                 data-titre="Suppression d'une nationalite"
                 data-message="Êtes-vous sûr de vouloir supprimer cette nationalite : {{ nationalite.libelle }}"
                 data-libelleConf="Supprimer"
                 data-lien="{{ path('app_admin_nationalite_suppr', {'id': nationalite.id}) }}"
                 class='btn btn-danger' 
-                role='button'>🗑️</a>
+                role='button'><i class="bi bi-trash-fill text-white"></i></button>
             </td>
             </tr>
         {% endfor %}
